@@ -9,25 +9,49 @@ document.addEventListener('DOMContentLoaded', () => {
     
     let currentImageIndex = 0;
 
+    // Mobile menu functionality
+    const menuIcon = document.querySelector('.menu-icon');
+    const menuToggle = document.getElementById('menu-toggle');
+    const desktopNav = document.querySelector('.desktop-nav');
+    const menuBars = menuIcon.querySelector('.fa-bars');
+    const menuTimes = menuIcon.querySelector('.fa-times');
 
+    // Initially hide the times icon
+    menuTimes.style.display = 'none';
 
+    menuIcon.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Toggle menu state
+        menuToggle.checked = !menuToggle.checked;
+        
+        // Toggle icons
+        if (menuToggle.checked) {
+            menuBars.style.display = 'none';
+            menuTimes.style.display = 'block';
+            desktopNav.style.display = 'flex';
+        } else {
+            menuBars.style.display = 'block';
+            menuTimes.style.display = 'none';
+            desktopNav.style.display = 'none';
+        }
+    });
 
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.menu-icon') && !e.target.closest('.desktop-nav')) {
+            menuToggle.checked = false;
+            menuBars.style.display = 'block';
+            menuTimes.style.display = 'none';
+            desktopNav.style.display = 'none';
+        }
+    });
 
-    // إصلاح تعارض التصميم
-document.querySelector('.menu-icon').addEventListener('click', () => {
-    document.body.classList.toggle('mobile-menu-open');
-});
-
-// إغلاق القائمة عند النقر خارجها
-document.addEventListener('click', (e) => {
-    if (!e.target.closest('.menu-icon') && !e.target.closest('.desktop-nav')) {
-        document.getElementById('menu-toggle').checked = false;
-        document.body.classList.remove('mobile-menu-open');
-    }
-});
-
-
-
+    // Prevent menu from closing when clicking inside it
+    desktopNav.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
 
     // Open lightbox
     portfolioItems.forEach((item, index) => {
@@ -77,7 +101,6 @@ document.addEventListener('click', (e) => {
     // Prevent image dragging
     lightboxImg.addEventListener('dragstart', (e) => e.preventDefault());
 });
-
 
 document.getElementById('contactForm').addEventListener('submit', async function(e) {
     e.preventDefault();
