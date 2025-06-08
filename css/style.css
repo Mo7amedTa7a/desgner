@@ -71,10 +71,11 @@ header img {
     padding: 0.5rem;
     display: flex;
     transition: transform 0.3s ease;
+    z-index: 1001;
 }
 
-.menu-icon.active {
-    transform: rotate(90deg);
+.menu-icon i {
+    transition: all 0.3s ease;
 }
 
 #menu-toggle {
@@ -121,23 +122,35 @@ header img {
 @media (max-width: 768px) {
     .desktop-nav {
         display: none;
-        position: absolute;
+        flex-direction: column;
+        position: fixed;
         top: 60px;
         right: 20px;
-        flex-direction: column;
         background: white;
         border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         padding: 1rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         min-width: 200px;
+        z-index: 1000;
     }
     
-    .mobile-menu {
-        display: flex;
+    .menu-icon {
+        display: block;
     }
     
-    #menu-toggle:checked ~ .desktop-nav {
-        display: flex;
+    .desktop-nav a {
+        padding: 0.8rem 1rem;
+        display: block;
+        text-align: right;
+        border-bottom: 1px solid rgba(1, 26, 116, 0.1);
+    }
+    
+    .desktop-nav a:last-child {
+        border-bottom: none;
+    }
+    
+    .desktop-nav a:hover {
+        background: rgba(1, 26, 116, 0.05);
     }
     
     #hero h1 {
